@@ -1,22 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { changeActiveRecipe } from '../actions';
+import { changeActiveRecipe, fetchRecipes } from '../actions';
 import RecipeDisplaySwitch from './recipe-display-switch/recipe-display-switch';
 import RecipeList from './recipe-list';
-
-
-let recipes = [
-  {
-    title: 'Test recipe',
-    description: 'Test recipe description Test recipe description Test recipe description Test recipe description Test recipe description Test recipe description Test recipe description Test recipe description ',
-    ingredients: ['500 ml of ingredient a', '3 oz of ingredient b', '500 mg of ingredient c']
-  }, {
-    title: 'Another test recipe',
-    description: 'Another test recipe description Another test recipe description Another test recipe description Another test recipe description Another test recipe description Another test recipe description ',
-    ingredients: ['3 cl of ingredient a', '400 ml of ingredient b', '5 kg of ingredient c']
-  }
-];
 
 class RecipeBox extends Component {
   constructor(props) {
@@ -26,6 +13,10 @@ class RecipeBox extends Component {
       addOrEdit: false
     };
   }
+
+  componentWillMount() {
+    this.props.fetchRecipes();
+  } 
 
   handleChangeActiveRecipe(recipe) {
     this.props.changeActiveRecipe(recipe);
@@ -51,7 +42,7 @@ class RecipeBox extends Component {
   }
 
   render() {
-    const { activeRecipe } = this.props;
+    const { activeRecipe, recipes } = this.props;
 
     return (
       <div className="row">
@@ -87,7 +78,10 @@ class RecipeBox extends Component {
 }
 
 function mapStateToProps(state) {
-  return { activeRecipe: state.activeRecipe };
+  return {
+    activeRecipe: state.activeRecipe,
+    recipes: state.recipes
+  };
 }
 
-export default connect(mapStateToProps, {changeActiveRecipe})(RecipeBox);
+export default connect(mapStateToProps, {changeActiveRecipe, fetchRecipes})(RecipeBox);
