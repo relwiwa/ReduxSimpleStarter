@@ -3,6 +3,7 @@ import React from 'react';
 import RecipeListItem from './recipe-list-item';
 
 function RecipeList(props) {
+  const { recipes, activeRecipe } = props;
 
   return (
     <div className="card card-outline-primary">
@@ -10,7 +11,7 @@ function RecipeList(props) {
         List of Recipes
       </div>
       <div className="list-group list-group-flush">
-        <RecipeListItem />
+        {recipes.map((recipe) => <RecipeListItem key={recipe.title} recipe={recipe} activeRecipe={activeRecipe} />)}
       </div>
     </div>    
   );
