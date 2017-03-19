@@ -1,8 +1,23 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { saveRecipe } from '../../actions';
+
+const FIELDS = {
+  title: {
+    type: 'input',
+    label: 'Title of recipe',
+    placeholder: 'Enter a title of the recipe',
+    extraClasses: 'form-control-lg'
+  },
+  ingredients: {
+    type: 'textarea',
+    label: 'Ingredients',
+    placeholder: 'List ingredients separated by semicolons'
+  }
+};
 
 class AddRecipe extends Component {
 
@@ -10,51 +25,42 @@ class AddRecipe extends Component {
     this.props.saveRecipe(newRecipe, this.props.recipes);
   }
 
-  renderInput = field => {
+  renderField = field => {
+    const { label, placeholder, type, extraClasses } = FIELDS[field.input.name];
+
     const fieldError = (field.meta.error && field.meta.touched) ? true : false;
+    const FormElement = `${type}`;
 
     return (
       <p className={`card-text form-group ${fieldError ? 'has-danger' : ''}`}>
-        <input
-          className="form-control"
+        <label className="sr-only">{label}</label>
+        <FormElement
+          className={`form-control ${extraClasses ? extraClasses : ''}`}
           {...field.input}
-          placeholder={`Add ${field.input.name}`} />
+          placeholder={placeholder} />
         {fieldError ? <p className="form-control-feedback">{field.meta.error}</p> : null}
       </p>
     );
-  };
-
-  renderTextArea = field => {
-   const fieldError = (field.meta.error && field.meta.touched) ? true : false;
-
-    return (
-      <p className={`card-text form-group ${fieldError ? 'has-danger' : ''}`}>
-        <textarea
-          className="form-control"
-          {...field.input}
-          placeholder={`Add ${field.input.name}`} />
-        {fieldError ? <p className="form-control-feedback">{field.meta.error}</p> : null}
-      </p>
-    );
-  };
+  }
 
   render () {
     const { onCancelAddRecipe, handleSubmit } = this.props;
-
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <div className="card card-outline-primary">
+
           <div className="card-block">
-            <Field
-              type="text"
-              component={this.renderInput}
-              name="title"
-            />
-            <Field
-              component={this.renderTextArea}
-              name="ingredients"
-            />
+            {_.map(FIELDS, (field, key) => {
+              return (
+                <Field
+                  component={this.renderField}
+                  name={key}
+                  key={key}
+                />
+              );
+            })}
           </div>
+
           <div className="card-block">
             <button
               onClick={onCancelAddRecipe}
