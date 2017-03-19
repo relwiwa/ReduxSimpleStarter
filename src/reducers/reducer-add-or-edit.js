@@ -4,7 +4,7 @@ export default function(state = false, action) {
   switch (action.type) {
 
     case CHANGE_ACTIVE_RECIPE:
-      return false;
+      return action.payload === null ? true : false;
 
     case CHANGE_ADD_OR_EDIT_RECIPE:
       return action.payload;

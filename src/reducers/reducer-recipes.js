@@ -7,7 +7,8 @@ export default function(state = [], action) {
       return action.payload;
 
     case SAVE_RECIPE:
-      return [...state].concat(action.payload);
+      state.push(action.payload);
+      return state;
 
     default:
       return state

@@ -14,8 +14,8 @@ class RecipeDisplaySwitch extends Component {
       <div>
         {(!activeRecipe && !addOrEdit) ? <RecipeIntro /> : null}
         {(activeRecipe && !addOrEdit) ? <RecipeDetail onEditRecipe={onEditRecipe} activeRecipe={activeRecipe} /> : null}
-        {(!activeRecipe && addOrEdit) ? <AddRecipe onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
-        {(activeRecipe && addOrEdit) ? <EditRecipe onCancelEditRecipe={onCancelAddOrEditRecipe} activeRecipe={activeRecipe} onEdit/> : null}
+        {(!activeRecipe && addOrEdit) ? <AddRecipe recipes={recipes} onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
+        {(activeRecipe && addOrEdit) ? <EditRecipe onCancelEditRecipe={onCancelAddOrEditRecipe} activeRecipe={activeRecipe} /> : null}
       </div>
     );
   }

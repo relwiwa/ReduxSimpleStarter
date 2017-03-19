@@ -6,13 +6,12 @@ import { saveRecipe } from '../../actions';
 
 class AddRecipe extends Component {
 
-  onSubmit(props) {
-    this.props.saveRecipe(props);
+  onSubmit(newRecipe) {
+    this.props.saveRecipe(newRecipe, this.props.recipes);
   }
 
   render () {
-    const { onCancelAddRecipe } = this.props;
-    const { handleSubmit } = this.props;
+    const { onCancelAddRecipe, handleSubmit } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -38,7 +37,7 @@ class AddRecipe extends Component {
             <p className="card-text">
               <Field
                 className="form-control"
-                placeholder="List ingredients of recipe"
+                placeholder="List ingredients of recipe, separated by semicolons"
                 component="textarea"
                 name="ingredients"
               />

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const CHANGE_ACTIVE_RECIPE = 'CHANGE_ACTIVE_RECIPE';
 export const CHANGE_ADD_OR_EDIT_RECIPE = 'CHANGE_ADD_OR_EDIT_RECIPE';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
@@ -38,12 +40,23 @@ export function fetchRecipes() {
   }
 }
 
-export function saveRecipe(recipe) {
-  let ingredients = recipe.ingredients.split(';');
-  recipe.ingredients = ingredients;
+export function saveRecipe(newRecipe, allRecipes) {
+  // split ingredients into individual array elements
+  let ingredients = newRecipe.ingredients.split(';');
+  // trim each ingredient of whitespaces
+  ingredients = ingredients.map((ingredient) => _.trim(ingredient));
+  // get rid of empty values
+  ingredients = _.without(ingredients, '');
+  // ensure uniqueness of ingredients
+  ingredients = _.uniq(ingredients);
+  newRecipe.ingredients = ingredients;
+  // - add id to be used as key property
+  // - milliseconds are unique in this single user app
+  newRecipe.id = Date.now();
+  localStorage.setItem('recipes', allRecipes.concat(newRecipe));
 
   return {
     type: SAVE_RECIPE,
-    payload: recipe 
+    payload: newRecipe
   }
 }

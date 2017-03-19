@@ -4,7 +4,6 @@ import RecipeListItem from './recipe-list-item';
 
 function RecipeList(props) {
   const { activeRecipe, onChangeActiveRecipe, recipes } = props;
-  console.log(recipes);
 
   return (
     <div className="card card-outline-primary">

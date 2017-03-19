@@ -29,6 +29,7 @@ class RecipeBox extends Component {
 
   render() {
     const { activeRecipe, addOrEdit, recipes } = this.props;
+    console.log('re-render recipe-box', recipes, activeRecipe, addOrEdit);
 
     return (
       <div className="row">
