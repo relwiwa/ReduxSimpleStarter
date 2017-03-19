@@ -6,24 +6,16 @@ import RecipeDetail from './recipe-detail';
 import RecipeIntro from './recipe-intro';
 
 class RecipeDisplaySwitch extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      addOrEdit: false
-    };
-  }
 
   render() {
-    const { recipes, activeRecipe } = this.props;
-    const { addOrEdit } = this.state;
+    const { activeRecipe, addOrEdit, onCancelAddOrEditRecipe, onEditRecipe, recipes  } = this.props;
 
     return (
       <div>
         {(!activeRecipe && !addOrEdit) ? <RecipeIntro /> : null}
-        {(activeRecipe && !addOrEdit) ? <RecipeDetail activeRecipe={activeRecipe} /> : null}
-        {(!activeRecipe && addOrEdit) ? <AddRecipe /> : null}
-        {(activeRecipe && addOrEdit) ? <EditRecipe activeRecipe={activeRecipe} /> : null}
+        {(activeRecipe && !addOrEdit) ? <RecipeDetail onEditRecipe={onEditRecipe} activeRecipe={activeRecipe} /> : null}
+        {(!activeRecipe && addOrEdit) ? <AddRecipe onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
+        {(activeRecipe && addOrEdit) ? <EditRecipe onCancelEditRecipe={onCancelAddOrEditRecipe} activeRecipe={activeRecipe} onEdit/> : null}
       </div>
     );
   }

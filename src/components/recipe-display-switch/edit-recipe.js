@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class EditRecipe extends Component {
   
   render () {
-    const { activeRecipe } = this.props;
+    const { activeRecipe, onCancelEditRecipe } = this.props;
 
     return (
       <div className="card card-outline-primary">
@@ -33,6 +33,7 @@ class EditRecipe extends Component {
         </div>
         <div className="card-block">
           <button
+            onClick={onCancelEditRecipe}
             type="button"
             className="btn btn-block btn-outline-info">Cancel</button>
           <button

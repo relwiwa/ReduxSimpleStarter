@@ -1,14 +1,18 @@
 import React from 'react';
 
 function RecipeListItem(props) {
-  const { recipe, activeRecipe } = props;
+  const { activeRecipe, onChangeActiveRecipe, recipe } = props;
+
+  const isActiveListItem = activeRecipe && (recipe.title === activeRecipe.title);
 
   return (
     <button
       type="button"
       className={"list-group-item list-group-item-action " +
-                (activeRecipe && (recipe.title === activeRecipe.title) ?
-                'active' : '')}>{recipe.title}</button>
+                (isActiveListItem ?
+                'active' : '')}
+      onClick={!isActiveListItem ? (() => onChangeActiveRecipe(recipe)) : null}
+      >{recipe.title}</button>
   );
 }
 

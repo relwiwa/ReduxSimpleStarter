@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 class AddRecipe extends Component {
   render () {
+    const { onCancelAddRecipe } = this.props;
+
     return (
       <div className="card card-outline-primary">
         <div className="card-block">
@@ -27,6 +29,7 @@ class AddRecipe extends Component {
         </div>
         <div className="card-block">
           <button
+            onClick={onCancelAddRecipe}
             type="button"
             className="btn btn-block btn-outline-info">Cancel</button>
           <button
