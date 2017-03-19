@@ -19,13 +19,6 @@ class EditRecipe extends Component {
           <p className="card-text">
             <textarea
               className="form-control"
-              value={activeRecipe.description}
-              placeholder="Add description of recipe"
-            />
-          </p>
-          <p className="card-text">
-            <textarea
-              className="form-control"
               value={activeRecipe.ingredients.join('; ')}
               placeholder="List ingredients of recipe"
             />

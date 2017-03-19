@@ -29,14 +29,6 @@ class AddRecipe extends Component {
             <p className="card-text">
               <Field
                 className="form-control"
-                placeholder="Add description of recipe"
-                component="textarea"
-                name="description"
-              />
-            </p>
-            <p className="card-text">
-              <Field
-                className="form-control"
                 placeholder="List ingredients of recipe, separated by semicolons"
                 component="textarea"
                 name="ingredients"

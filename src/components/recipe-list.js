@@ -14,7 +14,7 @@ function RecipeList(props) {
         {recipes.length > 0 ?
           recipes.map((recipe) =>
             <RecipeListItem
-              key={recipe.title}
+              key={recipe.id}
               recipe={recipe}
               activeRecipe={activeRecipe}
               onChangeActiveRecipe={onChangeActiveRecipe}
