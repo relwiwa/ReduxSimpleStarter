@@ -1,5 +1,7 @@
 export const CHANGE_ACTIVE_RECIPE = 'CHANGE_ACTIVE_RECIPE';
+export const CHANGE_ADD_OR_EDIT_RECIPE = 'CHANGE_ADD_OR_EDIT_RECIPE';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
+export const SAVE_RECIPE = 'SAVE_RECIPE';
 
 let recipes = [
   {
@@ -21,10 +23,27 @@ export function changeActiveRecipe(recipe) {
   };
 }
 
+export function changeAddOrEditRecipe(trueOrFalse) {
+  return {
+    type: CHANGE_ADD_OR_EDIT_RECIPE,
+    payload: trueOrFalse
+  };
+}
+
 export function fetchRecipes() {
   console.log('action: fetch recipes');
   return {
     type: FETCH_RECIPES,
     payload: recipes
+  }
+}
+
+export function saveRecipe(recipe) {
+  let ingredients = recipe.ingredients.split(';');
+  recipe.ingredients = ingredients;
+
+  return {
+    type: SAVE_RECIPE,
+    payload: recipe 
   }
 }
