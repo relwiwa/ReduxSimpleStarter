@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
+import ActiveRecipeReducer from './reducer-active-recipe';
+
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  activeRecipe: ActiveRecipeReducer
 });
 
 export default rootReducer;
