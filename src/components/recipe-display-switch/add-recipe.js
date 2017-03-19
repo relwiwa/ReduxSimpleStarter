@@ -6,34 +6,54 @@ import { saveRecipe } from '../../actions';
 
 class AddRecipe extends Component {
 
-  onSubmit(newRecipe) {
+  handleFormSubmit(newRecipe) {
     this.props.saveRecipe(newRecipe, this.props.recipes);
   }
+
+  renderInput = field => {
+    const fieldError = (field.meta.error && field.meta.touched) ? true : false;
+
+    return (
+      <p className={`card-text form-group ${fieldError ? 'has-danger' : ''}`}>
+        <input
+          className="form-control"
+          {...field.input}
+          placeholder={`Add ${field.input.name}`} />
+        {fieldError ? <p className="form-control-feedback">{field.meta.error}</p> : null}
+      </p>
+    );
+  };
+
+  renderTextArea = field => {
+   const fieldError = (field.meta.error && field.meta.touched) ? true : false;
+
+    return (
+      <p className={`card-text form-group ${fieldError ? 'has-danger' : ''}`}>
+        <textarea
+          className="form-control"
+          {...field.input}
+          placeholder={`Add ${field.input.name}`} />
+        {fieldError ? <p className="form-control-feedback">{field.meta.error}</p> : null}
+      </p>
+    );
+  };
 
   render () {
     const { onCancelAddRecipe, handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <div className="card card-outline-primary">
           <div className="card-block">
-            <p className="card-text">
-              <Field
-                className="form-control form-control-lg"
-                type="text"
-                placeholder="Add title of recipe"
-                component="input"
-                name="title"
-              />
-            </p>
-            <p className="card-text">
-              <Field
-                className="form-control"
-                placeholder="List ingredients of recipe, separated by semicolons"
-                component="textarea"
-                name="ingredients"
-              />
-            </p>
+            <Field
+              type="text"
+              component={this.renderInput}
+              name="title"
+            />
+            <Field
+              component={this.renderTextArea}
+              name="ingredients"
+            />
           </div>
           <div className="card-block">
             <button
@@ -50,9 +70,41 @@ class AddRecipe extends Component {
   }
 }
 
+function validate(formValues, formProps) {
+  const errors = {};
+  const { title, ingredients } = formValues;
+  const { existingTitles } = formProps;
+
+  if (!title) {
+    errors.title = 'Please enter a title';
+  }
+  else if (existingTitles.indexOf(title.toLowerCase()) >= 0) {
+    errors.title = 'There is already a recipe with this title. Please change the title.';
+  }
+  else if (title.length < 5) {
+    errors.title = 'Please enter at least 5 characters';
+  }
+  else if (title.length > 50) {
+    errors.title = 'Please do not enter more than 50 characters';
+  }
+
+  if (!ingredients) {
+    errors.ingredients = 'Please enter ingredients';
+  }
+  else if (ingredients.length < 10) {
+    errors.ingredients = 'Please enter at least 10 characters';
+  }
+  else if (ingredients.length > 1000) {
+    errors.ingredients = 'Please do not enter more than 1000 characters';
+  }
+
+  return errors;
+}
+
 // reduxForm() v6 is no longer linked to connect()
 AddRecipe = reduxForm({
-  form: 'AddRecipe'
+  form: 'AddRecipe',
+  validate
 })(AddRecipe);
 
 AddRecipe = connect(null, { saveRecipe })(AddRecipe);
