@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
+import RecipeBox from './recipe-box';
+
 export default class App extends Component {
   render() {
     return (
-      <div>React simple starter</div>
+      <RecipeBox />
     );
   }
 }
