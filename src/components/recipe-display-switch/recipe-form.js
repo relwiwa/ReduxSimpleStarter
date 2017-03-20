@@ -6,7 +6,7 @@ const FIELDS = {
   title: {
     type: 'input',
     label: 'Title of recipe',
-    placeholder: 'Enter a title of the recipe',
+    placeholder: 'Enter a title for the recipe',
     extraClasses: 'form-control-lg'
   },
   ingredients: {

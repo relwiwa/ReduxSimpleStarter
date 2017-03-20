@@ -34,7 +34,7 @@ export function deleteRecipe(recipe) {
   return {
     type: DELETE_RECIPE,
     payload: {
-      recipes: recipes
+      recipes: recipes ? recipes : []
     }
   };
 }
