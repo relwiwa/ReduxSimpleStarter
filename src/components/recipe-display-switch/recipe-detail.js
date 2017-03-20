@@ -2,6 +2,7 @@ import React from 'react';
 
 function RecipeDetail(props) {
   const { activeRecipe, onEditRecipe } = props;
+  console.log(activeRecipe.ingredients);
 
   return (
     <div className="card card-outline-primary">

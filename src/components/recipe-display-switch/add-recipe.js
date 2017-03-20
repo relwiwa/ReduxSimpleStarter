@@ -1,118 +1,22 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { saveRecipe } from '../../actions';
-
-const FIELDS = {
-  title: {
-    type: 'input',
-    label: 'Title of recipe',
-    placeholder: 'Enter a title of the recipe',
-    extraClasses: 'form-control-lg'
-  },
-  ingredients: {
-    type: 'textarea',
-    label: 'Ingredients',
-    placeholder: 'List ingredients separated by semicolons'
-  }
-};
+import RecipeForm from './recipe-form';
 
 class AddRecipe extends Component {
 
-  handleFormSubmit(newRecipe) {
-    this.props.saveRecipe(newRecipe, this.props.recipes);
-  }
-
-  renderField = field => {
-    const { label, placeholder, type, extraClasses } = FIELDS[field.input.name];
-
-    const fieldError = (field.meta.error && field.meta.touched) ? true : false;
-    const FormElement = `${type}`;
-
-    return (
-      <p className={`card-text form-group ${fieldError ? 'has-danger' : ''}`}>
-        <label className="sr-only">{label}</label>
-        <FormElement
-          className={`form-control ${extraClasses ? extraClasses : ''}`}
-          {...field.input}
-          placeholder={placeholder} />
-        {fieldError ? <p className="form-control-feedback">{field.meta.error}</p> : null}
-      </p>
-    );
-  }
-
   render () {
-    const { onCancelAddRecipe, handleSubmit } = this.props;
+    const { activeRecipe, addOrEdit, existingTitles, onCancelAddRecipe, onEditRecipe, recipes  } = this.props;
+
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <div className="card card-outline-primary">
-
-          <div className="card-block">
-            {_.map(FIELDS, (field, key) => {
-              return (
-                <Field
-                  component={this.renderField}
-                  name={key}
-                  key={key}
-                />
-              );
-            })}
-          </div>
-
-          <div className="card-block">
-            <button
-              onClick={onCancelAddRecipe}
-              type="button"
-              className="btn btn-block btn-outline-info">Cancel</button>
-            <button
-              type="submit"
-              className="btn btn-block btn-outline-success">Save</button>
-          </div>
-        </div>
-      </form>
+      <RecipeForm
+        recipes={recipes}
+        existingTitles={existingTitles}
+        onCancel={onCancelAddRecipe}
+        onSubmit={this.props.saveRecipe} />
     );
   }
 }
 
-function validate(formValues, formProps) {
-  const errors = {};
-  const { title, ingredients } = formValues;
-  const { existingTitles } = formProps;
-
-  if (!title) {
-    errors.title = 'Please enter a title';
-  }
-  else if (existingTitles.indexOf(title.toLowerCase()) >= 0) {
-    errors.title = 'There is already a recipe with this title. Please change the title.';
-  }
-  else if (title.length < 5) {
-    errors.title = 'Please enter at least 5 characters';
-  }
-  else if (title.length > 50) {
-    errors.title = 'Please do not enter more than 50 characters';
-  }
-
-  if (!ingredients) {
-    errors.ingredients = 'Please enter ingredients';
-  }
-  else if (ingredients.length < 10) {
-    errors.ingredients = 'Please enter at least 10 characters';
-  }
-  else if (ingredients.length > 1000) {
-    errors.ingredients = 'Please do not enter more than 1000 characters';
-  }
-
-  return errors;
-}
-
-// reduxForm() v6 is no longer linked to connect()
-AddRecipe = reduxForm({
-  form: 'AddRecipe',
-  validate
-})(AddRecipe);
-
-AddRecipe = connect(null, { saveRecipe })(AddRecipe);
-
-export default AddRecipe;
+export default connect(null, { saveRecipe })(AddRecipe);

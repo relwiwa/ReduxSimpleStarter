@@ -9,13 +9,14 @@ class RecipeDisplaySwitch extends Component {
 
   render() {
     const { activeRecipe, addOrEdit, onCancelAddOrEditRecipe, onEditRecipe, recipes  } = this.props;
+    const existingTitles = recipes.map((recipe) => recipe.title.toLowerCase());
 
     return (
       <div>
         {(!activeRecipe && !addOrEdit) ? <RecipeIntro /> : null}
         {(activeRecipe && !addOrEdit) ? <RecipeDetail onEditRecipe={onEditRecipe} activeRecipe={activeRecipe} /> : null}
-        {(!activeRecipe && addOrEdit) ? <AddRecipe recipes={recipes} existingTitles={recipes.map((recipe) => recipe.title.toLowerCase())} onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
-        {(activeRecipe && addOrEdit) ? <EditRecipe recipes={recipes} existingTitles={recipes.map((recipe) => recipe.title.toLowerCase())} initialValues={activeRecipe} onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
+        {(!activeRecipe && addOrEdit) ? <AddRecipe recipes={recipes} existingTitles={existingTitles} onCancelAddRecipe={onCancelAddOrEditRecipe} /> : null}
+        {(activeRecipe && addOrEdit) ? <EditRecipe recipes={recipes} existingTitles={existingTitles} activeRecipe={activeRecipe} onCancelEditRecipe={onCancelAddOrEditRecipe} /> : null}
       </div>
     );
   }

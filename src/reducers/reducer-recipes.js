@@ -1,4 +1,4 @@
-import { FETCH_RECIPES, SAVE_RECIPE } from '../actions';
+import { FETCH_RECIPES, SAVE_RECIPE, UPDATE_RECIPE } from '../actions';
 
 export default function(state = [], action) {
   switch (action.type) {
@@ -7,8 +7,12 @@ export default function(state = [], action) {
       return action.payload;
 
     case SAVE_RECIPE:
-      state.push(action.payload);
-      return state;
+      console.log('reducer recipes, save recipe')
+      return action.payload.recipes;
+
+    case UPDATE_RECIPE:
+      console.log('reducer recipes, update recipe');
+      return action.payload.recipes;
 
     default:
       return state
