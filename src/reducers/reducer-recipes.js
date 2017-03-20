@@ -1,9 +1,13 @@
-import { FETCH_RECIPES, SAVE_RECIPE, UPDATE_RECIPE } from '../actions';
+import { DELETE_RECIPE, FETCH_RECIPES, SAVE_RECIPE, UPDATE_RECIPE } from '../actions';
 
 export default function(state = [], action) {
   switch (action.type) {
 
+    case DELETE_RECIPE:
+      return action.payload.recipes;
+
     case FETCH_RECIPES:
+      console.log('reducer recipes, delete recipe');
       return action.payload;
 
     case SAVE_RECIPE:

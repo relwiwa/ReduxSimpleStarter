@@ -21,7 +21,7 @@ function RecipeList(props) {
             />
           )
         :
-          <div className="list-group-item">There are no recipes yet</div>
+          <div className="list-group-item">There are no recipes</div>
         }
       </div>
     </div>    

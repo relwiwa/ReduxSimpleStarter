@@ -3,6 +3,7 @@ import _ from 'lodash';
 import recipesFallback from '../data/recipes-fallback';
 export const CHANGE_ACTIVE_RECIPE = 'CHANGE_ACTIVE_RECIPE';
 export const CHANGE_ADD_OR_EDIT_RECIPE = 'CHANGE_ADD_OR_EDIT_RECIPE';
+export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const SAVE_RECIPE = 'SAVE_RECIPE';
 export const UPDATE_RECIPE = 'UPDATE_RECIPE';
@@ -23,6 +24,21 @@ export function changeAddOrEditRecipe(trueOrFalse) {
   };
 }
 
+export function deleteRecipe(recipe) {
+  console.log('action: delete recipe');
+  let recipes = JSON.parse(localStorage.getItem('recipes'));
+  const index = _.findIndex(recipes, {'id': recipe.id});
+  _.pullAt(recipes, [index]);
+  localStorage.setItem('recipes', JSON.stringify(recipes));
+
+  return {
+    type: DELETE_RECIPE,
+    payload: {
+      recipes: recipes
+    }
+  };
+}
+
 export function fetchRecipes() {
   console.log('action: fetch recipes');
   const recipes = JSON.parse(localStorage.getItem('recipes'));
@@ -30,7 +46,7 @@ export function fetchRecipes() {
   return {
     type: FETCH_RECIPES,
     payload: recipes ? recipes : recipesFallback
-  }
+  };
 }
 
 export function saveRecipe(recipe) {
@@ -49,7 +65,7 @@ export function saveRecipe(recipe) {
   return {
     type: SAVE_RECIPE,
     payload: { recipe, recipes }
-  }
+  };
 }
 
 // so it's neither some weird behavior of redux state nor some javascript
@@ -71,8 +87,12 @@ export function updateRecipe(recipe) {
   return {
     type: UPDATE_RECIPE,
     payload: { recipe, recipes }
-  }
+  };
 }
+
+
+
+
 
 function prepareIngredients (recipe) {
   // split ingredients into individual array elements

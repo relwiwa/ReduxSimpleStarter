@@ -1,4 +1,4 @@
-import { CHANGE_ACTIVE_RECIPE, CHANGE_ADD_OR_EDIT_RECIPE, SAVE_RECIPE, UPDATE_RECIPE } from '../actions';
+import { CHANGE_ACTIVE_RECIPE, CHANGE_ADD_OR_EDIT_RECIPE, DELETE_RECIPE, SAVE_RECIPE, UPDATE_RECIPE } from '../actions';
 
 export default function(state = false, action) {
   switch (action.type) {
@@ -8,6 +8,10 @@ export default function(state = false, action) {
 
     case CHANGE_ADD_OR_EDIT_RECIPE:
       return action.payload;
+
+    case DELETE_RECIPE:
+      console.log('add or edit reducer: delete recipe');
+      return false;
 
     case SAVE_RECIPE:
       console.log('add or edit reducer: save recipe');
